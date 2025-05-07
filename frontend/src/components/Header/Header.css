@@ -1,0 +1,122 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #d59d6a;
+    padding: 40px 0 40px 6vw;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+body {
+    background: #d59d6a;
+    margin: 0;
+    padding: 0;
+}
+
+.header-left {
+    flex: 1;
+    color: #4b2e0e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 700px;
+}
+
+.header-left h1 {
+    font-size: 5vw;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.header-left h2 {
+    font-size: 2vw;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.header-left p {
+    font-size: 1.2vw;
+    margin-bottom: 30px;
+}
+
+.header-btn {
+    background: #4b2e0e;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 10px 24px;
+    font-size: 1.1vw;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    width: 150px;
+    border-radius: 50px;
+}
+
+.header-btn:hover {
+    background: #fff;
+    color: #4b2e0e;
+}
+
+.header-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+
+.header-img {
+    max-width: 90%;
+    max-height: 70vh;
+    object-fit: contain;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+@media (max-width: 900px) {
+    .header {
+        flex-direction: column;
+        padding: 100px 10px 30px;
+        min-height: unset;
+    }
+
+    .header-left,
+    .header-right {
+        max-width: 100%;
+        flex: unset;
+        text-align: center;
+        align-items: center;
+    }
+
+    .header-left h1 {
+        font-size: 8vw;
+    }
+
+    .header-left h2 {
+        font-size: 4vw;
+    }
+
+    .header-left p,
+    .header-btn {
+        font-size: 2vw;
+    }
+
+    .header-img {
+        max-width: 100%;
+        max-height: 40vh;
+    }
+}
