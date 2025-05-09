@@ -1,0 +1,73 @@
+/* Tổng thể */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background-color: #4b2e0e;
+    color: white;
+    padding-top: 30px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+    transition: width 0.3s ease;
+}
+
+.sidebar-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 16px;
+}
+
+.sidebar-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.sidebar-option:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+}
+
+.sidebar-option.active {
+    background-color: white;
+    color: #4b2e0e;
+    font-weight: bold;
+    border-left: 4px solid red;
+}
+
+.icon {
+    font-size: 20px;
+    min-width: 20px;
+}
+
+/* Media query for responsive sidebar */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-option p {
+        display: none;
+    }
+
+    .sidebar-option {
+        justify-content: center;
+        padding: 12px;
+    }
+
+    .sidebar-options {
+        padding: 0 8px;
+    }
+}

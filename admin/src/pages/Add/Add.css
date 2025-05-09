@@ -1,0 +1,129 @@
+/* Container chính */
+.add {
+    width: 100%;
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    font-size: 16px;
+    color: #333;
+}
+
+/* Form layout */
+.add form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Upload ảnh */
+.add-img-upload {
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.add-img-upload p {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.add-img-upload img {
+    width: 120px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Ô nhập tên và mô tả */
+.add-product-name,
+.add-product-description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-product-name p,
+.add-product-description p {
+    font-weight: bold;
+}
+
+.add-product-name input,
+.add-product-description textarea {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+    resize: none;
+}
+
+.add-product-name input:focus,
+.add-product-description textarea:focus {
+    border-color: #a55b2c;
+    outline: none;
+}
+
+/* Phân loại + Giá */
+.add-category-price {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.add-category,
+.add-price {
+    flex: 1;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-category p,
+.add-price p {
+    font-weight: bold;
+}
+
+.add-category select,
+.add-price input {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+.add-category select:focus,
+.add-price input:focus {
+    border-color: #a55b2c;
+    outline: none;
+}
+
+/* Nút gửi */
+.add-btn {
+    padding: 12px;
+    background-color: #4b2e0e;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-btn:hover {
+    background-color: #333;
+}
+
+/* Flex tiện ích */
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
