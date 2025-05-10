@@ -5,7 +5,7 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { StoreContext } from '../../context/StoreContext';
 
 const FoodItem = ({ id, name, price, description, image }) => {
-  const { cartItem, addToCart, removeFromCart } = useContext(StoreContext);
+  const { cartItem, addToCart, removeFromCart, url } = useContext(StoreContext);
 
   // Cảnh báo nếu id bị undefined
   if (id === undefined) {
@@ -24,7 +24,7 @@ const FoodItem = ({ id, name, price, description, image }) => {
     <div className="food-item">
       {/* Hình ảnh món ăn */}
       <div className="food-item-img-container">
-        <img className="food-item-img" src={image} alt={name} />
+        <img className="food-item-img" src={`${url}/images/${image}`} alt={name} />
         {!cartItem[id] ? (
           <button className="add-btn image-add-btn" onClick={handleAdd}>
             <FontAwesomeIcon icon={faPlus} />

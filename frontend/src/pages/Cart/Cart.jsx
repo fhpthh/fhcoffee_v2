@@ -4,7 +4,7 @@ import './Cart.css'
 import { StoreContext } from '../../context/StoreContext';
 
 const Cart = () => {
-  const { cartItem, food_list, removeFromCart, getTotalCartAmout } = useContext(StoreContext);
+  const { cartItem, food_list, removeFromCart, getTotalCartAmout, url } = useContext(StoreContext);
   const navigate = useNavigate();
 
   return (
@@ -25,7 +25,7 @@ const Cart = () => {
               return (
                 <div key={item._id}>
                   <div className="cart-items-item">
-                    <img src={item.image} alt="" />
+                    <img src={`${url}/images/${item.image}`} alt={item.name} />
                     <p>{item.name}</p>
                     <p>{item.price.toLocaleString() + 'đ'}</p>
                     <p>{cartItem[item._id]}</p>

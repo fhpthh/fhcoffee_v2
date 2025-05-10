@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './Navbar.css';
 import { assets } from '../../assets/assets';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -9,6 +9,23 @@ const Navbar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("home");
   const location = useLocation();
   const navigate = useNavigate();
+  const { getTotalCartAmout, token, setToken } = useContext(StoreContext);
+
+  // Kiểm tra token khi component mount
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, [setToken]);
+
+  // Xử lý đăng xuất
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setToken(null);
+    window.location.reload();
+  };
 
   // Scroll mượt về đầu trang
   const scrollToTop = (e) => {
@@ -94,7 +111,7 @@ const Navbar = ({ setShowLogin }) => {
       navigate('/');
     }
   };
-  const { getTotalCartAmout } = useContext(StoreContext);
+
   return (
     <div className="navbar">
       <div className="navbar-content">
@@ -129,7 +146,22 @@ const Navbar = ({ setShowLogin }) => {
             />
             <div className={getTotalCartAmout() === 0 ? "" : "dot"}></div>
           </div>
-          <button onClick={() => setShowLogin(true)}>Sign in</button>
+          {!token ? <button onClick={() => setShowLogin(true)}>Sign in</button>
+            : <div className='navbar-profile'>
+              <img src={assets.avatar} alt="" />
+              <ul className="nav-profile-dropdown">
+                <li>
+                  <img src={assets.bag} alt="" />
+                  <p>My Orders</p>
+                </li>
+                <hr />
+                <li onClick={handleLogout}>
+                  <img src={assets.logout} alt="" />
+                  <p>Logout</p>
+                </li>
+              </ul>
+            </div>
+          }
         </div>
       </div>
     </div>
