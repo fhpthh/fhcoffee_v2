@@ -27,10 +27,20 @@ const loginUser = async (req, res) => {
         }
 
         const token = createToken(user._id);
+        console.log("Generated token:", token);
+        console.log("Token length:", token.length);
+
         // Trả về thông tin user (trừ password)
         const { password: _pw, ...userData } = user.toObject();
         console.log("Login successful for user:", email);
-        res.status(200).json({ success: true, token, user: userData })
+        console.log("User data:", userData);
+
+        res.status(200).json({
+            success: true,
+            token,
+            user: userData,
+            message: "Đăng nhập thành công"
+        });
     }
     catch (error) {
         console.error("Login error:", error);
