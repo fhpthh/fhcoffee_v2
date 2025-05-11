@@ -1,0 +1,66 @@
+.userorder-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fffaf2;
+    border: 2px solid #8b5e3c;
+    border-radius: 16px;
+    padding: 32px 24px;
+    margin-top: 100px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+}
+
+.userorder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.userorder-item {
+    background: #f5f0ea;
+    border-radius: 12px;
+    padding: 20px 18px;
+    border: 1px solid #e0c9a6;
+    box-shadow: 0 2px 8px rgba(139, 94, 60, 0.04);
+}
+
+.userorder-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.userorder-label {
+    min-width: 110px;
+    font-weight: bold;
+    color: #8b5e3c;
+}
+
+.userorder-products {
+    margin: 0 0 0 10px;
+    padding: 0;
+    list-style: disc inside;
+}
+
+.userorder-amount {
+    color: #d3986a;
+    font-weight: bold;
+}
+
+.paid {
+    color: #2ecc40;
+    font-weight: bold;
+}
+
+.unpaid {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.userorder-loading,
+.userorder-empty {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 20px;
+    color: #8b5e3c;
+}

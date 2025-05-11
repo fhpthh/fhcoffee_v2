@@ -60,7 +60,7 @@ const Cart = () => {
               <b>{(getTotalCartAmout() === 0 ? 0 : getTotalCartAmout() + 20000).toLocaleString() + 'đ'}</b>
             </div>
           </div>
-          <button onClick={() => navigate('/order')}>Thanh toán</button>
+          <button onClick={() => navigate('/order')}>Đặt hàng</button>
         </div>
         <div className="cart-promocode">
           <div>Mã giảm giá </div>

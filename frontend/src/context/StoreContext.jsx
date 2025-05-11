@@ -51,31 +51,31 @@ const StoreContextProvider = (props) => {
         }
     };
 
-const removeFromCart = async (itemId) => {
-    setCartItem((prev) => {
-        if (!prev[itemId]) return prev;
-        const updated = { ...prev, [itemId]: prev[itemId] - 1 };
-        if (updated[itemId] <= 0) delete updated[itemId];
-        console.log('Cart after remove:', updated);
-        return updated;
-    });
-
-    try {
-        const response = await axios.delete(`${url}/api/cart/remove`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
-            params: {
-                itemId: itemId,
-                quantity: 1
-            }
+    const removeFromCart = async (itemId) => {
+        setCartItem((prev) => {
+            if (!prev[itemId]) return prev;
+            const updated = { ...prev, [itemId]: prev[itemId] - 1 };
+            if (updated[itemId] <= 0) delete updated[itemId];
+            console.log('Cart after remove:', updated);
+            return updated;
         });
 
-        console.log('API response:', response.data);
-    } catch (error) {
-        console.error('Error removing from cart:', error);
-    }
-};
+        try {
+            const response = await axios.delete(`${url}/api/cart/remove`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                params: {
+                    itemId: itemId,
+                    quantity: 1
+                }
+            });
+
+            console.log('API response:', response.data);
+        } catch (error) {
+            console.error('Error removing from cart:', error);
+        }
+    };
 
 
     const getTotalCartAmout = () => {
@@ -114,6 +114,11 @@ const removeFromCart = async (itemId) => {
         }
     };
 
+    const clearCart = () => {
+        setCartItem({});
+        // Nếu muốn xóa trên server, có thể gọi API xóa cartData của user ở đây
+    };
+
     const contextValue = {
         food_list,
         cartItem,
@@ -123,6 +128,7 @@ const removeFromCart = async (itemId) => {
         url,
         token,
         setToken,
+        clearCart,
     };
 
     return (
