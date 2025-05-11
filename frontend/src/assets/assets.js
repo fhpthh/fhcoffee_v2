@@ -30,7 +30,7 @@ import cross_icon from './crossicon.jpg';
 import avatar from './avatar.png';
 import bag from './bag.png';
 import logout from './logout.png';
-
+import order from './order.png';
 
 export const assets = {
     logo,
@@ -57,6 +57,7 @@ export const assets = {
     avatar,
     bag,
     logout,
+    order
 };
 
 export const menu_list = [

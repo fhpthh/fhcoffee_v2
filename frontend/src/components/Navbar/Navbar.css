@@ -267,9 +267,9 @@
     transition: all 0.3s ease;
 }
 
-.nav-profile-dropdown li:hover img {
+/* .nav-profile-dropdown li:hover img {
     transform: scale(1.1);
-}
+} */
 
 .nav-profile-dropdown li p {
     margin: 0;
@@ -281,15 +281,43 @@
 
 
 
-.nav-profile-dropdown li:last-child:hover img {
+/* .nav-profile-dropdown li:last-child:hover img {
     filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
-}
+} */
 
 .nav-profile-dropdown hr {
     margin: 8px 0;
     border: none;
     border-top: 1px solid rgba(213, 157, 106, 0.2);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-profile {
+  position: relative;
+}
+
+.nav-profile-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%; /* Hiển thị ngay dưới avatar */
+  right: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 10px 0;
+  min-width: 150px;
+}
+
+.nav-profile-dropdown li {
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+
+.navbar-profile:hover .nav-profile-dropdown {
+  display: block; /* Hiển thị menu khi hover vào avatar hoặc menu */
 }
 
 /* Animation for dropdown */

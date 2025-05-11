@@ -1,66 +1,68 @@
 .userorder-container {
-    max-width: 700px;
-    margin: 40px auto;
-    background: #fffaf2;
-    border: 2px solid #8b5e3c;
-    border-radius: 16px;
-    padding: 32px 24px;
-    margin-top: 100px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  margin-top: 150px;
+  margin-left: 60px ;
+  margin-right: 60px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fdf5f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.userorder-list {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+.userorder-container h2 {
+  text-align: center;
+  margin: 0 auto 30px;
+  width: fit-content;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #d7ccc8;
 }
 
-.userorder-item {
-    background: #f5f0ea;
-    border-radius: 12px;
-    padding: 20px 18px;
-    border: 1px solid #e0c9a6;
-    box-shadow: 0 2px 8px rgba(139, 94, 60, 0.04);
+.userorder-table-wrapper {
+  overflow-x: auto;
 }
 
-.userorder-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    font-size: 16px;
+.userorder-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+.userorder-table {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-.userorder-label {
-    min-width: 110px;
-    font-weight: bold;
-    color: #8b5e3c;
+.userorder-table thead {
+  background-color: #efebe9;
 }
 
-.userorder-products {
-    margin: 0 0 0 10px;
-    padding: 0;
-    list-style: disc inside;
+.userorder-table th,
+.userorder-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #d7ccc8;
+  vertical-align: top;
 }
 
-.userorder-amount {
-    color: #d3986a;
-    font-weight: bold;
+.userorder-table td ul {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.userorder-products li {
+  margin-bottom: 4px;
+  color: #5d4037;
 }
 
 .paid {
-    color: #2ecc40;
-    font-weight: bold;
+  color: #388e3c;
+  font-weight: bold;
 }
 
 .unpaid {
-    color: #e74c3c;
-    font-weight: bold;
+  color: #d32f2f;
+  font-weight: bold;
 }
 
-.userorder-loading,
-.userorder-empty {
-    text-align: center;
-    margin-top: 100px;
-    font-size: 20px;
-    color: #8b5e3c;
+.userorder-amount {
+  color: #6d4c41;
+  font-weight: bold;
 }
