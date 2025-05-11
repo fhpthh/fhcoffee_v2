@@ -5,6 +5,7 @@ import foodRoute from './routes/foodRoute.js';
 import 'dotenv/config.js'
 import userRouter from './routes/userRoute.js';
 import cartRouter from './routes/cartRoute.js';
+import orderRouter from './routes/orderroute.js';
 
 // app config
 const app = express();
@@ -18,13 +19,6 @@ app.use(cors({
 
 // Request logging middleware
 app.use((req, res, next) => {
-    console.log('=== Incoming Request ===');
-    console.log('Time:', new Date().toISOString());
-    console.log('Method:', req.method);
-    console.log('URL:', req.url);
-    console.log('Headers:', req.headers);
-    console.log('Body:', req.body);
-    console.log('=====================');
     next();
 });
 
@@ -36,6 +30,7 @@ app.use("/api/user", userRouter);
 app.use("/api/food", foodRoute);
 app.use("/api/cart", cartRouter);
 app.use("/images", express.static('uploads'));
+app.use("/api/order", orderRouter);
 
 // test route
 app.get("/", (req, res) => {
@@ -63,8 +58,5 @@ app.use((req, res) => {
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-    console.log('Available routes:');
-    console.log('- POST /api/cart/add');
-    console.log('- DELETE /api/cart/remove');
-    console.log('- POST /api/cart/get');
+
 });

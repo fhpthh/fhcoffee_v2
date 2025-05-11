@@ -72,7 +72,7 @@ const addToCart = async (req, res) => {
 const removeFromCart = async (req, res) => {
     try {
         const userId = req.user._id;
-        const itemId = req.body.itemId;
+        const { itemId, quantity } = req.query; // Lấy dữ liệu từ query string
 
         if (!itemId) {
             return res.status(400).json({
@@ -92,9 +92,9 @@ const removeFromCart = async (req, res) => {
         let cartData = userData.cartData || {};
         if (cartData[itemId]) {
             if (cartData[itemId] > 1) {
-                cartData[itemId] -= 1;
+                cartData[itemId] -= 1; // Giảm số lượng sản phẩm
             } else {
-                delete cartData[itemId];
+                delete cartData[itemId]; // Xóa sản phẩm nếu số lượng <= 0
             }
         }
 
@@ -115,7 +115,7 @@ const removeFromCart = async (req, res) => {
             message: "Error removing from cart"
         });
     }
-}
+};
 
 // fetch user cart data
 const getCart = async (req, res) => {
