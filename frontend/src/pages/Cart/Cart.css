@@ -1,8 +1,8 @@
 .cart {
-  margin-top: 100px;
+  margin-top: 90px;
   padding: 40px;
-  background-color: #d3986a;
-  /* màu nền cà phê */
+  /* background-color: #d3986a;
+  màu nền cà phê */
   min-height: 100vh;
 }
 
@@ -13,6 +13,7 @@
   border-radius: 12px;
   padding: 16px 24px;
   margin-bottom: 32px;
+  
 }
 
 /* Dòng tiêu đề */

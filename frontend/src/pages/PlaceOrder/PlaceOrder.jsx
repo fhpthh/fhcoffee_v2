@@ -37,6 +37,33 @@ const PlaceOrder = () => {
         console.log("Shipping Info:", data);
 
         try {
+            if (paymentMethod === "vnpay") {
+                const response = await axios.post(
+                    `${url}/api/order/place`,
+                    {
+                        fullName: data.fullName,
+                        phone: data.phone,
+                        address: data.address,
+                        orderItems: orderItems,
+                        total: getTotalCartAmout(),
+                        paymentMethod
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        },
+                        maxRedirects: 0,
+                        validateStatus: status => status >= 200 && status < 400
+                    }
+                );
+
+                if (response.data && response.data.vnpayUrl) {
+                    console.log("Redirecting to VNPAY:", response.data.vnpayUrl);
+                    window.location.href = response.data.vnpayUrl;
+                    return;
+                }
+            }
+
             const response = await axios.post(`${url}/api/order/place`, {
                 fullName: data.fullName,
                 phone: data.phone,
@@ -47,12 +74,11 @@ const PlaceOrder = () => {
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                },
+                }
             });
             console.log("Order placed successfully:", response.data);
-            if (paymentMethod === "vnpay" && response.data.success && response.data.paymentUrl) {
-                window.location.href = response.data.paymentUrl;
-            } else if (paymentMethod === "cod" && response.data.success) {
+
+            if (paymentMethod === "cod" && response.data.success) {
                 alert("Đặt hàng thành công! Vui lòng thanh toán khi nhận hàng.");
                 clearCart();
                 navigate("/myorders");
@@ -63,12 +89,12 @@ const PlaceOrder = () => {
     };
 
     const totalAmount = getTotalCartAmout();
-    
+
     useEffect(() => {
         if (!token) {
             navigate('/cart')
         }
-        else if(getTotalCartAmout()===0) {
+        else if (getTotalCartAmout() === 0) {
             navigate('/cart')
         }
     }, [url, token]);

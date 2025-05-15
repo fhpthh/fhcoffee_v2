@@ -114,9 +114,15 @@ const StoreContextProvider = (props) => {
         }
     };
 
-    const clearCart = () => {
+    const clearCart = async () => {
         setCartItem({});
-        // Nếu muốn xóa trên server, có thể gọi API xóa cartData của user ở đây
+        try {
+            await axios.post(`${url}/api/cart/clear`, {}, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        } catch (error) {
+            console.error("Error clearing cart on server:", error);
+        }
     };
 
     const contextValue = {

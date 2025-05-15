@@ -6,6 +6,8 @@
   margin-left: 40px;
   margin-right: 40px;
   margin-top: 60px;
+  scroll-margin-top: 100px;
+  padding-top: 30px;
 }
 
 .explore-menu h1 {
@@ -84,6 +86,7 @@
   background-color: #4b2e0e;
   border: none;
 }
+
 @media screen and (max-width: 768px) {
   .explore-menu h1 {
     font-size: 30px;
@@ -101,5 +104,5 @@
   .explore-menu-list-item p {
     font-size: max(2vw, 14px);
   }
-  
+
 }

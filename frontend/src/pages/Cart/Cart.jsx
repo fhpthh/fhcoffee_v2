@@ -10,6 +10,7 @@ const Cart = () => {
   return (
     <div className='cart'>
       <div className="cart-items-container">
+        
         <div className="cart-items">
           <div className="cart-items-title">
             <p>Sản phẩm</p>

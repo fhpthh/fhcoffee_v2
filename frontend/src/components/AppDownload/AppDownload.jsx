@@ -4,7 +4,7 @@ import assets from '../../assets/assets'
 const AppDownload = () => {
   return (
     <div className='app-download' id='app-download'>
-        <p>For Better Experience Download <br/> FH Coffee App</p>
+        <p> FH Coffee App</p>
         <div className='app-download-platforms'>
             <img src={assets.ggplay} alt="" />
             <img src={assets.appstore} alt="" />

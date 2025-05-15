@@ -5,19 +5,17 @@ import { StoreContext } from "../../context/StoreContext";
 
 const UserOrder = () => {
     const { url, token } = useContext(StoreContext);
-    console.log(url);
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!token) return; // Đợi token có rồi mới gọi API
 
-        axios.get(`${url}/api/order/userorders`, {
+        axios.get(`${url}/api/order/userorder`, {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(res => {
-                console.log(res.data);
-                setOrders(res.data.data || []);
+                setOrders(res.data.orders || []);
                 setLoading(false);
             })
             .catch(err => {
@@ -27,7 +25,6 @@ const UserOrder = () => {
     }, [url, token]);
 
     if (loading) return <div className="userorder-loading">Đang tải đơn hàng...</div>;
-    // if (!orders.length) return <div className="userorder-empty">Bạn chưa có đơn hàng nào.</div>;
 
     return (
         <div className="userorder-container">
@@ -45,28 +42,19 @@ const UserOrder = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map(order => (
+                        {[...orders].reverse().map(order => (
                             <tr key={order._id}>
-                                {/* Mã đơn hàng */}
                                 <td>{order._id}</td>
-
-                                {/* Ngày đặt */}
                                 <td>{new Date(order.date).toLocaleString()}</td>
-
-                                {/* Trạng thái thanh toán */}
                                 <td className={order.payment ? "paid" : "unpaid"}>
                                     {order.payment ? "Đã thanh toán" : "Chưa thanh toán"}
                                 </td>
-
-                                {/* Trạng thái đơn hàng */}
-                                <td className={`order-status ${order.status.toLowerCase()}`}>
+                                <td className={`order-status ${order.status?.toLowerCase()}`}>
                                     {order.status === "Processing" && "Đang xử lý"}
                                     {order.status === "Shipped" && "Đã giao hàng"}
                                     {order.status === "Delivered" && "Đã giao"}
                                     {order.status === "Canceled" && "Đã hủy"}
                                 </td>
-
-                                {/* Danh sách sản phẩm */}
                                 <td>
                                     <ul className="userorder-products">
                                         {order.items.map((item, idx) => (
@@ -74,8 +62,6 @@ const UserOrder = () => {
                                         ))}
                                     </ul>
                                 </td>
-
-                                {/* Tổng tiền */}
                                 <td className="userorder-amount">
                                     {order.amount.toLocaleString()}đ
                                 </td>
@@ -86,7 +72,6 @@ const UserOrder = () => {
             </div>
         </div>
     );
-
 };
 
-export default UserOrder; 
+export default UserOrder;

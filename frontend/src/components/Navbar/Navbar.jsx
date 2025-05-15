@@ -39,7 +39,9 @@ const Navbar = ({ setShowLogin }) => {
     e.preventDefault();
     setMenu("menu");
     const el = document.getElementById('explore-menu');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   // Home: luôn về trang chủ và scroll lên đầu
@@ -63,11 +65,15 @@ const Navbar = ({ setShowLogin }) => {
       navigate('/');
       setTimeout(() => {
         const el = document.getElementById('explore-menu');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       }, 200);
     } else {
       const el = document.getElementById('explore-menu');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
     setMenu('menu');
   };
@@ -137,7 +143,7 @@ const Navbar = ({ setShowLogin }) => {
           </li>
         </ul>
         <div className="navbar-right">
-          <i className="fas fa-search" style={{ color: 'white' }}></i>
+
           <div className="navbar-search-icon">
             <i
               className="fas fa-shopping-cart"
@@ -150,7 +156,7 @@ const Navbar = ({ setShowLogin }) => {
             : <div className='navbar-profile'>
               <img src={assets.avatar} alt="" />
               <ul className="nav-profile-dropdown">
-                <li onClick={()=>navigate('/myorders')}>
+                <li onClick={() => navigate('/myorders')}>
                   <img src={assets.bag} alt="" />
                   <p>My Orders</p>
                 </li>
