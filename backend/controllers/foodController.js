@@ -5,7 +5,7 @@ const addFood = async (req, res) => {
     console.log("Received request body:", req.body);
     console.log("Received file:", req.file);
 
-    let image_filename = `${req.file?.filename}`;
+    let image_filename = `${req.file.filename}`;
     const food = new foodModel({
         name: req.body.name,
         description: req.body.description,

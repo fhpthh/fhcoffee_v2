@@ -6,6 +6,9 @@ import 'dotenv/config.js'
 import userRouter from './routes/userRoute.js';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderroute.js';
+import adminAuthRouter from './routes/adminRoute.js'; // router cũ cho login/logout
+
+
 
 // app config
 const app = express();
@@ -17,11 +20,6 @@ app.use(cors({
     origin: '*'
 }));
 
-// Request logging middleware
-app.use((req, res, next) => {
-    next();
-});
-
 // db connect
 connectDB();
 
@@ -31,6 +29,8 @@ app.use("/api/food", foodRoute);
 app.use("/api/cart", cartRouter);
 app.use("/images", express.static('uploads'));
 app.use("/api/order", orderRouter);
+app.use('/api/admin', adminAuthRouter); // login/logout, v.v.
+
 
 // test route
 app.get("/", (req, res) => {
@@ -58,5 +58,4 @@ app.use((req, res) => {
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-
 });

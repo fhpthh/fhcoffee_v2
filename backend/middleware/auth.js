@@ -3,11 +3,26 @@ import jwt from 'jsonwebtoken';
 const authMiddleware = async (req, res, next) => {
     try {
         console.log('=== Auth Middleware ===');
-        console.log('Headers:', req.headers);
-        const authHeader = req.headers.authorization;
-        console.log('Auth Header:', authHeader);
 
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        // Xử lý token từ headers hoặc từ body (từ form POST)
+        let authToken;
+
+        // Lấy token từ header Authorization
+        const authHeader = req.headers.authorization;
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            authToken = authHeader.split(' ')[1];
+        }
+
+        // Lấy token từ body form (khi gửi từ form)
+        if (!authToken && req.body && req.body.Authorization) {
+            const bodyAuth = req.body.Authorization;
+            if (bodyAuth.startsWith('Bearer ')) {
+                authToken = bodyAuth.split(' ')[1];
+            }
+        }
+
+        // Nếu không tìm thấy token
+        if (!authToken) {
             console.log('Invalid or missing token');
             return res.status(401).json({
                 success: false,
@@ -15,10 +30,9 @@ const authMiddleware = async (req, res, next) => {
             });
         }
 
-        const token = authHeader.split(' ')[1];
-        console.log('Token received:', token);
+        console.log('Token received:', authToken);
 
-        const token_decode = jwt.verify(token, process.env.JWT_SECRET);
+        const token_decode = jwt.verify(authToken, process.env.JWT_SECRET);
         console.log('Decoded token:', token_decode);
 
         // Add user info to request

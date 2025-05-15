@@ -145,4 +145,14 @@ const getCart = async (req, res) => {
     }
 }
 
-export { addToCart, removeFromCart, getCart }
+const clearCart = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        await userModel.findByIdAndUpdate(userId, { cartData: {} });
+        return res.status(200).json({ success: true, message: "Cart cleared" });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Error clearing cart" });
+    }
+};
+
+export { addToCart, removeFromCart, getCart, clearCart }
