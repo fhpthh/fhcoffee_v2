@@ -81,7 +81,7 @@
     margin: 10px 0;
     background-color: #d59d6a;
     border: none;
-  
+
     margin-bottom: 5px;
 }
 
@@ -106,10 +106,43 @@
     color: #d59d6a;
 }
 
+/* Tablet responsive styles */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .footer-content {
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    .footer-content-left,
+    .footer-content-right,
+    .footer-content-center {
+        gap: 15px;
+    }
+
+    .footer-content-left li,
+    .footer-content-right li,
+    .footer-content-center li {
+        font-size: 15px;
+    }
+
+    .footer-content-left h2,
+    .footer-content-right h2,
+    .footer-content-center h2 {
+        font-size: 18px;
+    }
+}
+
+/* Mobile responsive styles */
 @media screen and (max-width: 768px) {
+    .footer {
+        padding: 30px 20px 20px;
+    }
+
     .footer-content {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 30px;
+        width: 100%;
     }
 
     .footer-content-left,
@@ -117,6 +150,7 @@
     .footer-content-center {
         align-items: center;
         text-align: center;
+        gap: 15px;
     }
 
     .footer-content-left img {
@@ -125,5 +159,48 @@
 
     .footer-social-icons {
         justify-content: center;
+    }
+
+    .footer-content-left li,
+    .footer-content-right li,
+    .footer-content-center li {
+        margin-bottom: 6px;
+    }
+
+    .footer .footer-bottom p {
+        text-align: center;
+    }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 480px) {
+    .footer {
+        padding: 25px 15px 15px;
+    }
+
+    .footer-content {
+        gap: 25px;
+    }
+
+    .footer-content-left img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .footer-content-left h2,
+    .footer-content-right h2,
+    .footer-content-center h2 {
+        font-size: 17px;
+    }
+
+    .footer-content-left li,
+    .footer-content-right li,
+    .footer-content-center li {
+        font-size: 14px;
+    }
+
+    .footer-social-icons {
+        gap: 15px;
+        font-size: 18px;
     }
 }

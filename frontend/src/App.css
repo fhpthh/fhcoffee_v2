@@ -84,3 +84,92 @@ main {
 .payment-result.failed a:hover {
     background-color: #c82333;
 }
+
+.payment-result.loading {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+/* Global responsive styles */
+@media screen and (max-width: 768px) {
+    main {
+        margin-top: 80px;
+    }
+
+    h1 {
+        font-size: calc(1.8rem + 1vw) !important;
+    }
+
+    h2 {
+        font-size: calc(1.5rem + 0.8vw) !important;
+    }
+
+    h3 {
+        font-size: calc(1.2rem + 0.5vw) !important;
+    }
+
+    p {
+        font-size: 1rem !important;
+    }
+
+    .flex-responsive {
+        flex-direction: column !important;
+    }
+
+    .hidden-mobile {
+        display: none !important;
+    }
+
+    button,
+    .btn {
+        padding: 8px 16px !important;
+        font-size: 14px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    main {
+        margin-top: 60px;
+    }
+
+    h1 {
+        font-size: calc(1.5rem + 1vw) !important;
+    }
+
+    h2 {
+        font-size: calc(1.2rem + 0.8vw) !important;
+    }
+
+    h3 {
+        font-size: calc(1rem + 0.5vw) !important;
+    }
+
+    p {
+        font-size: 0.9rem !important;
+    }
+
+    button,
+    .btn {
+        padding: 6px 12px !important;
+        font-size: 13px !important;
+    }
+
+    img:not(.logo):not(.responsive-full) {
+        max-width: 90% !important;
+    }
+}

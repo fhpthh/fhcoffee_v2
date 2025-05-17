@@ -91,6 +91,58 @@
   font-weight: bold;
 }
 
+/* Styling cho phần phân trang */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pagination-button {
+  background: #fff;
+  border: 1px solid #d59d6a;
+  color: #4b2e0e;
+  padding: 8px 12px;
+  margin: 0 3px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 40px;
+}
+
+.pagination-button:hover {
+  background: #d59d6a;
+  color: #fff;
+}
+
+.pagination-button.active {
+  background: #4b2e0e;
+  color: #fff;
+  border-color: #4b2e0e;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  margin-left: 15px;
+  color: #4b2e0e;
+  font-size: 14px;
+}
+
+.loading-row,
+.empty-row {
+  text-align: center;
+  padding: 20px !important;
+  color: #4b2e0e !important;
+  font-style: italic;
+}
+
 @media (max-width: 900px) {
   .userorder-container {
     padding: 8px 1vw;
@@ -102,5 +154,80 @@
   .userorder-table td {
     padding: 10px 6px;
     font-size: 0.98rem;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pagination-info {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .pagination-button {
+    padding: 6px 9px;
+    margin: 0 2px;
+    min-width: 36px;
+    font-size: 13px;
+  }
+}
+
+/* Styling cho phần phân trang mới */
+.simple-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  gap: 5px;
+}
+
+.simple-pagination a,
+.simple-pagination button {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #555;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 35px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.simple-pagination a:hover,
+.simple-pagination button:hover {
+  background: #f4f4f4;
+}
+
+.simple-pagination a.active,
+.simple-pagination button.active {
+  background: #fff;
+  color: #4b2e0e;
+  border-color: #4b2e0e;
+  font-weight: bold;
+}
+
+.simple-pagination .nav-button {
+  color: #666;
+  font-weight: normal;
+}
+
+@media (max-width: 480px) {
+
+  .simple-pagination a,
+  .simple-pagination button {
+    padding: 5px 10px;
+    min-width: 30px;
+    font-size: 13px;
   }
 }

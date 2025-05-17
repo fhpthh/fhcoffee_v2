@@ -146,69 +146,121 @@
 
 @media screen and (max-width: 768px) {
     .navbar {
-        flex-direction: column;
-        align-items: center;
-
-
+        padding: 10px 0;
     }
 
     .navbar-content {
-        gap: 10px;
-
+        flex-direction: column;
+        gap: 15px;
+        padding: 0 15px;
     }
 
-    /* .navbar-content {
-        flex-direction: column;
-        align-items: center;
-    } */
+    .navbar .logo {
+        width: 50px;
+        height: 50px;
+        margin-left: 0;
+    }
 
-    .navbar-links {
-        flex-direction: column;
-        gap: 1rem;
+    .navbar-menu {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        font-size: 16px;
     }
 
     .navbar-right {
-        margin-top: 1rem;
+        width: 100%;
+        justify-content: center;
+        margin-right: 0;
+        gap: 20px;
     }
 
+    .navbar button {
+        padding: 8px 20px;
+        font-size: 13px;
+    }
+
+    .nav-profile-dropdown {
+        right: -50px;
+        width: 200px;
+    }
+}
+
+/* Tablet responsive styles */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .navbar-content {
+        padding: 0 20px;
+    }
+
+    .navbar-menu {
+        gap: 15px;
+        font-size: 16px;
+    }
+
+    .navbar-right {
+        gap: 20px;
+    }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 480px) {
+    .navbar-menu {
+        font-size: 14px;
+        gap: 10px;
+    }
+
+    .navbar button {
+        padding: 6px 15px;
+        font-size: 12px;
+    }
+
+    .navbar-search-icon .fa-shopping-cart {
+        font-size: 18px;
+    }
+
+    .navbar-profile img {
+        width: 35px;
+        height: 35px;
+    }
 }
 
 .search-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
 }
 
 .search-container .fa-search {
-  font-size: 24px;
-  color: #fff;
-  cursor: pointer;
-  margin-right: 6px;
-  transition: color 0.2s;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 6px;
+    transition: color 0.2s;
 }
 
 .search-container .fa-search:hover {
-  color: #ff9800;
+    color: #ff9800;
 }
 
 #searchInput {
-  display: none;
-  width: 220px;
-  padding: 10px 14px;
-  border: 2px solid #fff;
-  border-radius: 8px;
-  font-size: 18px;
-  outline: none;
-  background: #fff;
-  color: #4b2e0e;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: border-color 0.2s, box-shadow 0.2s;
+    display: none;
+    width: 220px;
+    padding: 10px 14px;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    font-size: 18px;
+    outline: none;
+    background: #fff;
+    color: #4b2e0e;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 #searchInput:focus {
-  border-color: #ff9800;
-  box-shadow: 0 0 0 2px #ff9800;
+    border-color: #ff9800;
+    box-shadow: 0 0 0 2px #ff9800;
 }
 
 /* Profile styles */
@@ -341,31 +393,33 @@
 }
 
 .navbar-profile {
-  position: relative;
+    position: relative;
 }
 
 .nav-profile-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%; /* Hiển thị ngay dưới avatar */
-  right: 0;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  padding: 10px 0;
-  min-width: 150px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    /* Hiển thị ngay dưới avatar */
+    right: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 10px 0;
+    min-width: 150px;
 }
 
 .nav-profile-dropdown li {
-  padding: 10px 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 
 .navbar-profile:hover .nav-profile-dropdown {
-  display: block; /* Hiển thị menu khi hover vào avatar hoặc menu */
+    display: block;
+    /* Hiển thị menu khi hover vào avatar hoặc menu */
 }
 
 /* Animation for dropdown */
