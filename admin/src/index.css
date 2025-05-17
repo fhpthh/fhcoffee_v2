@@ -25,9 +25,25 @@ hr {
 }
 
 .app-content {
-  display:  flex;
-
+  display: flex;
+  min-height: 100vh;
+  /* background: #4b2e0e; */
 }
+
+.sidebar {
+  min-height: 100vh;
+  background: #4b2e0e;
+}
+
+.main-content {
+  flex: 1;
+  background: #f7f7f7;
+  margin: 32px;
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+}
+
 .flex-col {
   display: flex;
   flex-direction: column;

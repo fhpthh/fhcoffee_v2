@@ -1,0 +1,144 @@
+.admin-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.admin-login-container {
+    background: #5a3714;
+    padding: 2.5rem 2rem 2rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+    width: 100%;
+    max-width: 420px;
+    color: #fff;
+    position: relative;
+}
+
+.admin-login-header {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.admin-login-logo {
+    display: none;
+}
+
+.admin-login-header h2 {
+    color: #e6b17e;
+    margin: 0 0 0.5rem 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.admin-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.admin-login-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.admin-login-input-group label {
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.admin-login-input-group input {
+    padding: 1rem;
+    border: 1.5px solid #e6b17e;
+    border-radius: 7px;
+    font-size: 1.1rem;
+    background: transparent;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.admin-login-input-group input::placeholder {
+    color: #fff;
+    opacity: 0.7;
+}
+
+.admin-login-input-group input:focus {
+    border-color: #f3c48b;
+}
+
+.admin-login-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-login-checkbox-row input[type="checkbox"] {
+    accent-color: #e6b17e;
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+}
+
+.admin-login-checkbox-label {
+    color: #fff;
+    font-size: 1rem;
+    user-select: none;
+}
+
+.admin-login-button {
+    background-color: #e6b17e;
+    color: #5a3714;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.admin-login-button:hover {
+    background-color: #f3c48b;
+}
+
+.admin-login-error {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 0.8rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.admin-login-switch {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.admin-login-switch p {
+    color: #fff;
+    font-size: 1.05rem;
+}
+
+.admin-login-switch span {
+    color: #e6b17e;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: underline;
+    margin-left: 4px;
+}
+
+.admin-login-switch span:hover {
+    color: #fff2d6;
+}
