@@ -212,7 +212,7 @@ const checkPaymentVnpay = async (req, res) => {
         console.log("Query string:", query);
 
         // Lấy orderId từ vnp_TxnRef hoặc vnp_OrderInfo
-        const orderId = vnp_TxnRef || vnp_OrderInfo;
+        const orderId = vnp_TxnRef || (vnp_OrderInfo ? vnp_OrderInfo.split(' ').pop() : null);
         console.log("Using Order ID:", orderId);
 
         // Bước 4: Tạo mã băm từ chuỗi truy vấn và secretKey
@@ -224,15 +224,6 @@ const checkPaymentVnpay = async (req, res) => {
         console.log("Expected hash:", expectedHash);
         console.log("Received hash:", vnp_SecureHash);
 
-        // Tạm thời bỏ qua kiểm tra chữ ký để xem hệ thống có hoạt động không
-        // if (vnp_SecureHash !== expectedHash) {
-        //     console.error("Invalid signature from VNPay:", {
-        //         received: vnp_SecureHash,
-        //         expected: expectedHash,
-        //     });
-        //     return res.redirect(`${frontend_url}/failed`);
-        // }
-
         // Kiểm tra kết quả giao dịch
         console.log("Checking response code:", vnp_ResponseCode);
         if (vnp_ResponseCode === "00") {
@@ -242,20 +233,24 @@ const checkPaymentVnpay = async (req, res) => {
             // Tìm đơn hàng theo nhiều cách
             let findOrder = null;
 
-            try {
-                // Tìm theo ID trực tiếp
-                findOrder = await orderModel.findById(orderId);
-                console.log("Order found by ID:", findOrder ? findOrder._id : "not found");
-            } catch (err) {
-                console.log("Error finding by ID:", err.message);
-                // Nếu ID không hợp lệ hoặc không tìm thấy, thử tìm bằng OrderInfo
+            if (orderId) {
                 try {
-                    if (vnp_OrderInfo) {
-                        findOrder = await orderModel.findById(vnp_OrderInfo);
-                        console.log("Order found by OrderInfo:", findOrder ? findOrder._id : "not found");
-                    }
-                } catch (err2) {
-                    console.log("Error finding by OrderInfo:", err2.message);
+                    // Tìm theo ID trực tiếp
+                    findOrder = await orderModel.findById(orderId);
+                    console.log("Order found by ID:", findOrder ? findOrder._id : "not found");
+                } catch (err) {
+                    console.log("Error finding by ID:", err.message);
+                }
+            }
+
+            // Nếu không tìm thấy bằng ID, thử tìm trong OrderInfo
+            if (!findOrder && vnp_OrderInfo) {
+                const possibleId = vnp_OrderInfo.split(' ').pop();
+                try {
+                    findOrder = await orderModel.findById(possibleId);
+                    console.log("Order found by OrderInfo extract:", findOrder ? findOrder._id : "not found");
+                } catch (err) {
+                    console.log("Error finding by OrderInfo extract:", err.message);
                 }
             }
 
@@ -268,24 +263,51 @@ const checkPaymentVnpay = async (req, res) => {
 
             if (!findOrder) {
                 console.error("Order not found by any method");
-                return res.redirect(`${frontend_url}/failed`); // Chuyển sang redirect thay vì trả về JSON
+                return res.redirect(`${frontend_url}/failed?error=order_not_found`);
             }
 
             console.log("Order found, updating status for order:", findOrder._id);
+
             // Cập nhật trạng thái đơn hàng thành công
-            findOrder.status = 'paid';
-            findOrder.payment = true;
-            await findOrder.save();
+            try {
+                findOrder.status = 'paid';
+                findOrder.payment = true;
+                await findOrder.save();
+                console.log("Order status updated successfully:", findOrder._id);
+            } catch (updateError) {
+                console.error("Error updating order status:", updateError);
+                return res.redirect(`${frontend_url}/failed?error=update_failed`);
+            }
+
+            // Cố gắng tìm và xóa giỏ hàng của người dùng
+            try {
+                if (findOrder.userId) {
+                    const user = await userModel.findById(findOrder.userId);
+                    if (user) {
+                        user.cartData = {};
+                        await user.save();
+                        console.log("User cart cleared successfully for user:", findOrder.userId);
+                    } else {
+                        console.log("User not found for ID:", findOrder.userId);
+                    }
+                } else {
+                    console.log("No userId associated with order");
+                }
+            } catch (cartError) {
+                console.error("Error clearing user cart:", cartError);
+                // Vẫn tiếp tục xử lý mặc dù có lỗi khi xóa giỏ hàng
+            }
+
             console.log("Order updated successfully, redirecting to success page");
-            return res.redirect(`${frontend_url}/success`);
+            return res.redirect(`${frontend_url}/success?orderId=${findOrder._id}`);
         } else {
             // Giao dịch thất bại
             console.error("Transaction failed with code:", vnp_ResponseCode);
-            return res.redirect(`${frontend_url}/failed`);
+            return res.redirect(`${frontend_url}/failed?code=${vnp_ResponseCode}`);
         }
     } catch (err) {
         console.error("Error in checkPaymentVnpay:", err);
-        return res.redirect(`${frontend_url}/failed`);
+        return res.redirect(`${frontend_url}/failed?error=system_error`);
     }
 };
 
@@ -313,8 +335,32 @@ const verifyOrder = async (req, res) => {
 const getUserOrders = async (req, res) => {
     try {
         const userId = req.user._id;
-        const orders = await orderModel.find({ userId }).sort({ createdAt: -1 });
-        res.json({ success: true, orders });
+
+        // Lấy tham số phân trang từ query params
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        // Đếm tổng số đơn hàng để tính số trang
+        const totalOrders = await orderModel.countDocuments({ userId });
+        const totalPages = Math.ceil(totalOrders / limit);
+
+        // Lấy đơn hàng theo trang
+        const orders = await orderModel.find({ userId })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.json({
+            success: true,
+            orders,
+            pagination: {
+                currentPage: page,
+                totalPages,
+                totalOrders,
+                limit
+            }
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: "Error fetching orders" });
