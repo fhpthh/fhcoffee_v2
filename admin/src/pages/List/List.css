@@ -3,18 +3,19 @@
   background-color: #fff;
   border-radius: 12px;
   max-width: 1000px;
-  margin-top: 40px ;
+  margin-top: 40px;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.list > p {
+.list>p {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
-  color: #4b2e0e;;
+  color: #4b2e0e;
+  ;
 }
 
 .list-table {
@@ -74,7 +75,75 @@
     margin-left: 10px;
     margin: 10px;
   }
-  
+
 }
 
+/* CSS cho phân trang */
+.admin-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
 
+.pagination-button {
+  background: white;
+  border: 1px solid #ddd;
+  color: #4b2e0e;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-button:hover {
+  background: #f0f0f0;
+  border-color: #4b2e0e;
+}
+
+.pagination-button.active {
+  background: #4b2e0e;
+  color: white;
+  border-color: #4b2e0e;
+  font-weight: 600;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Trạng thái loading và empty */
+.loading-message {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #666;
+  grid-column: span 5;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+  grid-column: span 5;
+}
+
+.remove-button {
+  cursor: pointer;
+  color: #dc3545;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.remove-button:hover {
+  transform: scale(1.2);
+}

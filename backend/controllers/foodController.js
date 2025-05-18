@@ -34,17 +34,36 @@ const addFood = async (req, res) => {
 
 const listFood = async (req, res) => {
     try {
-        const food = await foodModel.find({});
-        res.json({
+        // Lấy tham số phân trang từ query params
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        // Đếm tổng số sản phẩm
+        const totalItems = await foodModel.countDocuments();
+        const totalPages = Math.ceil(totalItems / limit);
+
+        // Truy vấn danh sách sản phẩm với phân trang
+        const items = await foodModel.find()
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.status(200).json({
             success: true,
-            message: "Food list fetched successfully",
-            data: food,
+            data: items,
+            pagination: {
+                totalItems,
+                totalPages,
+                currentPage: page,
+                limit
+            }
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             success: false,
-            message: "Error fetching food list",
+            message: "Lỗi khi lấy danh sách sản phẩm",
+            error: error.message
         });
     }
 }

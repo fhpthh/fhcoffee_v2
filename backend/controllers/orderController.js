@@ -370,10 +370,38 @@ const getUserOrders = async (req, res) => {
 // Lấy tất cả các đơn hàng (Admin)
 const getAllOrders = async (req, res) => {
     try {
-        const orders = await orderModel.find().sort({ createdAt: -1 });
-        res.json({ success: true, data: orders });
+        // Lấy tham số phân trang từ query params
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        // Đếm tổng số đơn hàng
+        const totalOrders = await orderModel.countDocuments();
+        const totalPages = Math.ceil(totalOrders / limit);
+
+        // Truy vấn danh sách đơn hàng với phân trang
+        const orders = await orderModel.find()
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.json({
+            success: true,
+            data: orders,
+            pagination: {
+                totalOrders,
+                totalPages,
+                currentPage: page,
+                limit
+            }
+        });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Error fetching all orders" });
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Lỗi khi tải danh sách đơn hàng",
+            error: error.message
+        });
     }
 };
 

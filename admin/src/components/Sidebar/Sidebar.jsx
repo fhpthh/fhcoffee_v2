@@ -7,6 +7,10 @@ const Sidebar = () => {
   return (
     <div className='sidebar'>
       <div className="sidebar-options">
+        <NavLink to='/dashboard' className="sidebar-option">
+          <FaChartLine className='icon' />
+          <p>Thống kê</p>
+        </NavLink>
         <NavLink to='/add' className="sidebar-option">
           <FaPlusCircle className='icon' />
           <p>Thêm sản phẩm</p>
@@ -19,10 +23,6 @@ const Sidebar = () => {
           <FaClipboardList className='icon' />
           <p>Đặt hàng</p>
         </NavLink>
-        {/* <NavLink to='/' className="sidebar-option">
-          <FaChartLine className='icon' />
-          <p>Dashboard</p>
-        </NavLink> */}
       </div>
     </div>
   )
