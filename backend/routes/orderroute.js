@@ -14,15 +14,49 @@ orderRouter.get("/check-payment-vnpay", checkPaymentVnpay);
 // Cập nhật trạng thái đơn hàng
 orderRouter.post('/status', async (req, res) => {
     const { orderId, status } = req.body;
+
+    if (!orderId || !status) {
+        return res.status(400).json({
+            success: false,
+            message: 'Thiếu thông tin orderId hoặc status'
+        });
+    }
+
     try {
-        const updated = await orderModel.findByIdAndUpdate(orderId, { status }, { new: true });
+        // Validate status
+        const validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'canceled', 'paid'];
+        if (!validStatuses.includes(status.toLowerCase())) {
+            return res.status(400).json({
+                success: false,
+                message: 'Trạng thái không hợp lệ'
+            });
+        }
+
+        const updated = await orderModel.findByIdAndUpdate(
+            orderId,
+            { status: status.toLowerCase() },
+            { new: true }
+        );
+
         if (updated) {
-            return res.json({ success: true, message: 'Cập nhật trạng thái thành công!' });
+            return res.json({
+                success: true,
+                message: 'Cập nhật trạng thái thành công!',
+                data: updated
+            });
         } else {
-            return res.status(404).json({ success: false, message: 'Không tìm thấy đơn hàng' });
+            return res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy đơn hàng'
+            });
         }
     } catch (error) {
-        return res.status(500).json({ success: false, message: 'Lỗi server' });
+        console.error('Error updating order status:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Lỗi server khi cập nhật trạng thái đơn hàng',
+            error: error.message
+        });
     }
 });
 

@@ -64,7 +64,7 @@ const Order = ({ url }) => {
     try {
       const response = await axios.post(`${url}/api/order/status`, {
         orderId,
-        status: event.target.value,
+        status: event.target.value.toLowerCase(),
       });
 
       if (response.data.success) {
@@ -73,7 +73,7 @@ const Order = ({ url }) => {
         // Cập nhật trạng thái trong mảng allOrders
         const updatedAllOrders = allOrders.map(order => {
           if (order._id === orderId) {
-            return { ...order, status: event.target.value };
+            return { ...order, status: event.target.value.toLowerCase() };
           }
           return order;
         });
@@ -83,7 +83,7 @@ const Order = ({ url }) => {
         // Cập nhật lại trang hiện tại
         displayPage(pagination.currentPage, updatedAllOrders);
       } else {
-        toast.error("Không thể cập nhật trạng thái đơn hàng.");
+        toast.error(response.data.message || "Không thể cập nhật trạng thái đơn hàng.");
       }
     } catch (error) {
       console.error("Error updating order status:", error);

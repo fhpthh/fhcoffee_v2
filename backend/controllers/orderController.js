@@ -339,17 +339,19 @@ const getUserOrders = async (req, res) => {
         // Lấy tham số phân trang từ query params
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
-        const skip = (page - 1) * limit;
 
-        // Đếm tổng số đơn hàng để tính số trang
-        const totalOrders = await orderModel.countDocuments({ userId });
+        // Lấy tất cả đơn hàng và sắp xếp theo thời gian mới nhất
+        const allOrders = await orderModel.find({ userId })
+            .sort({ date: -1, createdAt: -1 });
+
+        // Tính toán phân trang
+        const totalOrders = allOrders.length;
         const totalPages = Math.ceil(totalOrders / limit);
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
 
-        // Lấy đơn hàng theo trang
-        const orders = await orderModel.find({ userId })
-            .sort({ createdAt: -1 })
-            .skip(skip)
-            .limit(limit);
+        // Lấy đơn hàng cho trang hiện tại
+        const orders = allOrders.slice(startIndex, endIndex);
 
         res.json({
             success: true,
