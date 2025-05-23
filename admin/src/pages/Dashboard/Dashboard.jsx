@@ -119,18 +119,18 @@ const Dashboard = ({ url }) => {
     const revenueData = statistics.revenue.byMonth.map(item => item.revenue);
     const revenueLabels = statistics.revenue.byMonth.map(item => `${item.month}/${item.year}`);
 
-    // Chuẩn bị dữ liệu cho biểu đồ tròn trạng thái đơn hàng
-    const statusKeys = Object.keys(statistics.orders.byStatus);
+    // Chỉ lấy đúng 4 trạng thái cần thiết
+    const allowedStatus = ['processing', 'ship', 'delivered', 'canceled'];
+    const statusKeys = Object.keys(statistics.orders.byStatus).filter(key =>
+        allowedStatus.includes(key.toLowerCase())
+    );
     const statusData = statusKeys.map(key => statistics.orders.byStatus[key]);
-
-    // Chuyển đổi tên trạng thái sang tiếng Việt
     const statusLabels = statusKeys.map(status => {
-        switch (status) {
-            case 'Processing': return 'Đang xử lý';
-            case 'Shipped': return 'Đã giao';
-            case 'Delivered': return 'Đã nhận';
-            case 'Canceled': return 'Đã hủy';
-            case 'paid': return 'Đã thanh toán';
+        switch (status.toLowerCase()) {
+            case 'processing': return 'Đang xử lý';
+            case 'ship': return 'Đang vận chuyển';
+            case 'delivered': return 'Đã giao hàng';
+            case 'canceled': return 'Đã hủy';
             default: return status;
         }
     });

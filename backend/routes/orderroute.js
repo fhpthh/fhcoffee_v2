@@ -24,7 +24,7 @@ orderRouter.post('/status', async (req, res) => {
 
     try {
         // Validate status
-        const validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'canceled', 'paid'];
+        const validStatuses = ['processing', 'ship', 'delivered', 'canceled'];
         if (!validStatuses.includes(status.toLowerCase())) {
             return res.status(400).json({
                 success: false,

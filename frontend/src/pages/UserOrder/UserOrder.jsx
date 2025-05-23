@@ -190,7 +190,7 @@ const UserOrder = () => {
                                         {order.status === "shipped" && "Đã giao hàng"}
                                         {order.status === "delivered" && "Đã giao"}
                                         {order.status === "canceled" && "Đã hủy"}
-                                        {order.status === "paid" && "Đã thanh toán"}
+                                        {order.payment === "paid" && "Chờ xử lý"}
                                     </td>
                                     <td>
                                         <ul className="userorder-products">

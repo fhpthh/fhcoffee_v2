@@ -62,9 +62,10 @@ const Order = ({ url }) => {
 
   const handleStatusChange = async (event, orderId) => {
     try {
+      const newStatus = event.target.value.toLowerCase();
       const response = await axios.post(`${url}/api/order/status`, {
         orderId,
-        status: event.target.value.toLowerCase(),
+        status: newStatus,
       });
 
       if (response.data.success) {
@@ -73,7 +74,7 @@ const Order = ({ url }) => {
         // Cập nhật trạng thái trong mảng allOrders
         const updatedAllOrders = allOrders.map(order => {
           if (order._id === orderId) {
-            return { ...order, status: event.target.value.toLowerCase() };
+            return { ...order, status: newStatus };
           }
           return order;
         });
@@ -261,12 +262,12 @@ const Order = ({ url }) => {
               <select
                 value={selectedOrder.status}
                 onChange={(e) => handleStatusChange(e, selectedOrder._id)}
-                className={selectedOrder.status === "Canceled" ? "canceled" : selectedOrder.status === "Delivered" ? "delivered" : "processing"}
+                className={selectedOrder.status === "canceled" ? "canceled" : selectedOrder.status === "delivered" ? "delivered" : "processing"}
               >
-                <option value="Processing">Đang xử lý</option>
-                <option value="Shipped">Đã giao hàng</option>
-                <option value="Delivered">Đã giao</option>
-                <option value="Canceled">Đã hủy</option>
+                <option value="processing">Đang xử lý</option>
+                <option value="ship">Đang vận chuyển</option>
+                <option value="delivered">Đã giao hàng</option>
+                <option value="canceled">Đã hủy</option>
               </select>
             </div>
           </div>
@@ -306,12 +307,11 @@ const Order = ({ url }) => {
                     <select
                       value={order.status}
                       onChange={(e) => handleStatusChange(e, order._id)}
-                      className={order.status === "Canceled" ? "canceled" : order.status === "Delivered" ? "delivered" : "processing"}
+                      className={order.status === "canceled" ? "canceled" : order.status === "delivered" ? "delivered" : "processing"}
                     >
-                      <option value="Processing">Đang xử lý</option>
-                      <option value="Shipped">Đã giao hàng</option>
-                      <option value="Delivered">Đã giao</option>
-                      <option value="Canceled">Đã hủy</option>
+                      <option value="processing">Đang xử lý</option>
+                      <option value="delivered">Đã giao hàng</option>
+                      <option value="canceled">Đã hủy</option>
                     </select>
                   </td>
                   <td>

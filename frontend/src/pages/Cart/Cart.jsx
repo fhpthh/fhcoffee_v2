@@ -13,7 +13,7 @@ const Cart = () => {
         
         <div className="cart-items">
           <div className="cart-items-title">
-            <p>Sản phẩm</p>
+            <p>Ảnh</p>
             <p>Sản phẩm</p>
             <p>Giá tiền</p>
             <p>Số lượng</p>
@@ -63,13 +63,13 @@ const Cart = () => {
           </div>
           <button onClick={() => navigate('/order')}>Đặt hàng</button>
         </div>
-        <div className="cart-promocode">
+        {/* <div className="cart-promocode">
           <div>Mã giảm giá </div>
           <div className="cart-promocode-input">
             <input type="text" placeholder='nhập mã' />
             <button>Áp mã</button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
