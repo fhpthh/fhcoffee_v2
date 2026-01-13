@@ -1,0 +1,145 @@
+.login-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login-popup-container {
+    background-color: #4b2e0e;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #d59d6a;
+}
+
+.login-popup-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.login-popup-title h2 {
+    margin: 0;
+    color: #d59d6a;
+    font-size: 1.5rem;
+}
+
+.login-popup-title img {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.login-popup-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.login-popup-inputs input {
+    padding: 0.8rem;
+    border: 1px solid #d59d6a;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+    background-color: #4b2e0e;
+    color: #fff;
+}
+
+.login-popup-inputs input::placeholder {
+    color: #fff;
+    opacity: 0.7;
+}
+
+.login-popup-inputs input:focus {
+    border-color: #d59d6a;
+}
+
+.login-popup-container button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #d59d6a;
+    color: #4b2e0e;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.login-popup-container button:hover {
+    background-color: #e6b17e;
+}
+
+.login-popup-condition {
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: #d59d6a;
+    text-align: center;
+}
+
+.login-popup-condition span {
+    color: #d59d6a;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.login-popup-container p {
+    text-align: center;
+    margin-top: 1rem;
+    color: #fff;
+}
+
+.login-popup-container p span {
+    color: #d59d6a;
+    cursor: pointer;
+    font-weight: bold;
+    
+    margin-left: 5px;
+}
+
+.login-popup-container p span:hover {
+    color: #e6b17e;
+}
+
+.login-popup-checkbox-label {
+    gap: 10px;
+    columns: #fff;
+}
+.login-popup-checkbox-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.login-popup-checkbox-row input[type="checkbox"] {
+    accent-color: #fff; /* Màu tích trắng nếu trình duyệt hỗ trợ */
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+.login-popup-checkbox-label {
+    color: #fff;
+    font-size: 15px;
+    user-select: none;
+}
+
+.login-popup-error {
+    font-size: 13px;
+    margin-bottom: 8px;
+    margin-left: 2px;
+}
