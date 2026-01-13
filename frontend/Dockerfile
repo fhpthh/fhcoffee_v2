@@ -1,20 +1,13 @@
-# ---------- Stage 1: build ----------
-FROM node:20-alpine AS build
-
+# Stage 1: build
+FROM node:20-alpine AS builder-frontend
 WORKDIR /app
-
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm install
+COPY . ./
+RUN npm run build
 
-COPY . .
-RUN npm install --omit=dev
-
-
-# ---------- Stage 2: serve ----------
+# Stage 2: production
 FROM nginx:alpine
-
-COPY --from=build /app/dist /usr/share/nginx/html
-
+COPY --from=builder-frontend /app/dist /usr/share/nginx/html
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
