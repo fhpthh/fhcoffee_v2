@@ -1,11 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react'
-import Navbar from './components/navbar/navbar'
 import { Routes, Route, useSearchParams, useNavigate } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Cart from './pages/Cart/Cart'
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
 import Footer from './components/Footer/Footer'
 import LoginPopup from './components/LoginPopup/LoginPopup'
+import Navbar from './components/Navbar/Navbar'
+
 import './App.css'
 import Verify from './pages/Verify/Verify'
 import UserOrder from './pages/UserOrder/UserOrder'

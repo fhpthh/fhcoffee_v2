@@ -5,7 +5,7 @@ import space2 from './space2.jpg';
 import space3 from './space3.jpg';
 import latte from './latte.jpg';
 import cappuccino from './capuchino.jpg';
-import espresso from './espresso.jpg';
+import espresso from './Espresso.jpg';
 import americano from './americano.jpg';
 import frappuchino from './frappuchino.jpg';
 import icedcoffee from './icedcoffe.jpg';
