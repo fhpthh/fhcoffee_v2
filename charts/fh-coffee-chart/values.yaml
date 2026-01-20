@@ -8,6 +8,7 @@ backend:
   name: fh-backend
   image: huepth/fhcoffee-backend:latest
   port: 4000
+  servicePort: 30000
 
 frontend:
   name: fh-frontend
