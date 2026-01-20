@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   mongo:
     image: mongo:6
@@ -9,6 +8,7 @@ services:
       - mongo_data:/data/db
 
   backend:
+    image: huepth/fhcoffee-backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -21,6 +21,7 @@ services:
       - mongo
 
   frontend:
+    image: huepth/fhcoffee-frontend:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -33,13 +34,13 @@ services:
       - backend
 
   admin:
+    image: huepth/fhcoffee-admin:latest
     build:
       context: ./admin
       dockerfile: Dockerfile
       args:
         VITE_API_URL: http://localhost:4000
     container_name: fh-admin
-    
     ports:
       - "3001:80"
     depends_on:
