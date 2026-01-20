@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mongo.name }}
+  namespace: {{ .Values.global.namespace | default .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongo
+          image: {{ .Values.mongo.image | quote }}
+          ports:
+            - containerPort: {{ .Values.mongo.port }}
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+      volumes:
+        - name: mongo-data
+          hostPath:
+            path: /data/mongo-storage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mongo.name }}
+  namespace: {{ .Values.global.namespace | default .Release.Namespace }}
+spec:
+  selector:
+    app: mongo
+  ports:
+    - port: {{ .Values.mongo.port }}
+      targetPort: {{ .Values.mongo.port }}

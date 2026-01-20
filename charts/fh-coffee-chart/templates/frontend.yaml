@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontend.name }}
+  namespace: {{ .Values.global.namespace | default .Release.Namespace }}
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: frontend
+    template:
+      metadata: 
+        labels: 
+          app: frontend
+      spec:
+        containers:  
+          - name: frontend
+            image: {{ .Values.frontend.image | quote }}
+            ports:
+              - containerPort: {{ .Values.frontend.port }}
+            env:
+              - name: VITE_API_URL
+                value: {{ .Values.frontend.apiUrl | quote }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.frontend.name }}
+  namespace: {{ .Values.global.namespace | default .Release.Namespace }}
+spec:
+  type: NodePort
+  selector:
+    app: frontend
+  ports:
+    - port: {{ .Values.frontend.port }}
+      targetPort: {{ .Values.frontend.port }}
+      nodePort: {{ .Values.frontend.servicePort }}

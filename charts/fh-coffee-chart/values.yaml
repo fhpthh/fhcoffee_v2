@@ -1,0 +1,29 @@
+global:
+  namespace: cloud-final
+
+mongodb:
+  uri: "mongodb://fh-mongo:27017/FHCOFFEE"
+
+backend:
+  name: fh-backend
+  image: huepth/fhcoffee-backend:latest
+  port: 4000
+
+frontend:
+  name: fh-frontend
+  image: huepth/fhcoffee-frontend:latest
+  port: 80
+  servicePort: 32002
+  apiUrl: "http://localhost:4000"
+
+admin:
+  name: fh-admin
+  image: huepth/fhcoffee-admin:latest
+  port: 80
+  servicePort: 32001
+  apiUrl: "http://localhost:4000"
+
+mongo:
+  name: fh-mongo
+  image: mongo:6
+  port: 27017

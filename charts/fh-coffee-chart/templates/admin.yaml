@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.admin.name }}
+  namespace: {{ .Values.global.namespace | default .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin
+  template:
+    metadata:
+      labels:
+        app: admin
+    spec:
+      containers:
+        - name: admin
+          image: {{ .Values.admin.image | quote }}
+          ports:
+            - containerPort: {{ .Values.admin.port }}
+          env:
+            - name: VITE_API_URL
+              value: {{ .Values.admin.apiUrl | quote }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.admin.name }}
+  namespace: {{ .Values.global.namespace | default .Release.Namespace }}
+spec:
+  type: NodePort
+  selector:
+    app: admin
+  ports:
+    - port: {{ .Values.admin.port }}
+      targetPort: {{ .Values.admin.port }}
+      nodePort: {{ .Values.admin.servicePort }}
