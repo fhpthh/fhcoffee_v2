@@ -6,7 +6,7 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
     const [admin, setAdmin] = useState(null);
     const [loading, setLoading] = useState(true);
-    const url = "http://localhost:4000";
+    const url = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         // Kiểm tra token trong localStorage khi component mount
