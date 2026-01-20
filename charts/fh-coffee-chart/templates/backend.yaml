@@ -22,9 +22,12 @@ spec:
           ports:
             - containerPort: {{ .Values.backend.port }}
           env:
-            - name: MONGO_URI
+            - name: MONGODB_URI
               value: {{ .Values.mongodb.uri | quote }}
-
+            - name: MONGO_URL
+              value: {{ .Values.mongodb.uri | quote }}
+            - name: PORT
+              value: {{ .Values.backend.port | quote }}
 ---
 apiVersion: v1
 kind: Service

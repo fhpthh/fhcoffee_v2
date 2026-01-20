@@ -14,14 +14,14 @@ frontend:
   image: huepth/fhcoffee-frontend:latest
   port: 80
   servicePort: 32002
-  apiUrl: "http://localhost:4000"
+  apiUrl: "http://fh-backend:4000"
 
 admin:
   name: fh-admin
   image: huepth/fhcoffee-admin:latest
   port: 80
   servicePort: 32001
-  apiUrl: "http://localhost:4000"
+  apiUrl: "http://fh-backend:4000"
 
 mongo:
   name: fh-mongo
