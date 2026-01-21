@@ -7,31 +7,18 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: kaniko
-    image: gcr.io/kaniko-project/executor:debug
-    imagePullPolicy: IfNotPresent
+  - name: test-shell
+    image: busybox
     command: ["sleep"]
-    args: ["999999"]
-    volumeMounts:
-    - name: docker-config
-      mountPath: /kaniko/.docker/
-  volumes:
-  - name: docker-config
-    secret:
-      secretName: dockerhub-creds
-      items:
-      - key: .dockerconfigjson
-        path: config.json
+    args: ["3600"]
 """
         }
     }
     stages {
-        stage('Test Kaniko Environment') {
+        stage('Test Connection') {
             steps {
-                container('kaniko') {
-                    // Chỉ kiểm tra xem có thấy file secret không
-                    sh "ls -la /kaniko/.docker/"
-                    sh "cat /kaniko/.docker/config.json"
+                container('test-shell') {
+                    sh 'echo "Ket noi thanh cong qua WebSocket!"'
                 }
             }
         }
