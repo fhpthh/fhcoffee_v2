@@ -1,6 +1,7 @@
 pipeline {
   agent {
     kubernetes {
+      cloud 'k3s-cloud'
       yaml """
 apiVersion: v1
 kind: Pod
@@ -15,7 +16,7 @@ spec:
       mountPath: /workspace
 
   - name: kaniko
-    image: gcr.io/kaniko-project/executor:debug
+    image: gcr.io/kaniko-project/executor:v1.22.0-debug
     command: ["sleep"]
     args: ["999999"]
     volumeMounts:
@@ -40,7 +41,6 @@ spec:
   environment {
     DOCKER_USER   = "huepth"
     APP_NAME      = "fhcoffee"
-    CONFIG_REPO   = "https://github.com/fhpthh/fh-coffee-config.git"
     CONFIG_BRANCH = "main"
   }
 
@@ -50,6 +50,7 @@ spec:
       steps {
         container('git') {
           checkout scm
+          sh "cp -r . /workspace"
         }
       }
     }
@@ -127,7 +128,7 @@ spec:
 
   post {
     success {
-      echo "Pipeline succeeded!"
+      echo "🎉 Pipeline succeeded!"
     }
     always {
       echo "Pipeline completed."
