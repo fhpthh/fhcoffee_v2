@@ -7,19 +7,31 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: test-shell
-    image: busybox
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: IfNotPresent
     command: ["sleep"]
-    args: ["3600"]
+    args: ["999999"]
+    volumeMounts:
+    - name: docker-config
+      mountPath: /kaniko/.docker/
+  volumes:
+  - name: docker-config
+    secret:
+      secretName: dockerhub-creds
+      items:
+      - key: .dockerconfigjson
+        path: config.json
 """
         }
     }
     stages {
-        stage('Check Pod creation') {
+        stage('Test Kaniko Environment') {
             steps {
-                container('test-shell') {
-                    sh 'echo "Pod da duoc tao thanh cong tren K3s!"'
-                    sh 'date'
+                container('kaniko') {
+                    // Chỉ kiểm tra xem có thấy file secret không
+                    sh "ls -la /kaniko/.docker/"
+                    sh "cat /kaniko/.docker/config.json"
                 }
             }
         }
