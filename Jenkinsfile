@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'docker:20.10.16'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         DOCKER_USER   = "huepth"
@@ -19,7 +24,7 @@ pipeline {
         stage("Get Git Tag") {
             steps {
                 script {
-                    IMAGE_TAG = sh(
+                    env.IMAGE_TAG = sh(
                         script: "git describe --tags --abbrev=0",
                         returnStdout: true
                     ).trim()
@@ -28,7 +33,7 @@ pipeline {
                         error("Không tìm thấy Git Tag – pipeline chỉ chạy khi có TAG")
                     }
 
-                    echo "Using image tag: ${IMAGE_TAG}"
+                    echo " Using image tag: ${IMAGE_TAG}"
                 }
             }
         }
@@ -82,7 +87,7 @@ pipeline {
         always {
             echo "Pipeline completed."
             sh "docker logout"
-            cleeanWs()
+            cleanWs()
         }
         success {
             echo "Pipeline succeeded!"
