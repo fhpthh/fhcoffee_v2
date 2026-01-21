@@ -6,6 +6,11 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
+  dnsPolicy: "None"
+  dnsConfig:
+    nameservers:
+      - 8.8.8.8
+      - 1.1.1.1
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
