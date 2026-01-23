@@ -67,21 +67,24 @@ pipeline {
              }
          }
 
-
         stage("Update ArgoCD") {
             steps {
                 container('git') {
-                  withCredentials([usernamePassword(credentialsId: "${env.GIT_CRED_ID}", passwordVariable: 'GITHUB_TOKEN', usernameVariable: 'GITHUB_USER')]) {
+                    // Sửa lỗi: Đồng bộ tên biến GIT_USER và GIT_PASS
+                    withCredentials([usernamePassword(credentialsId: "${env.GIT_CRED_ID}", passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         dir('config-deploy-repo') {
                             sh """
-                            rm -rf .git
+                            # Xoa thu muc cu de clone moi hoan toan
+                            rm -rf * .git
+                            
+                            # Them dau \ truoc $ de Jenkins truyen dung bien vao Container
                             git clone https://\${GIT_USER}:\${GIT_PASS}@${env.GIT_CONFIG_REPO} .
 
                             git config user.email "jenkins-bot@ci.com"
                             git config user.name "jenkins-bot"
                             
+                            # Cap nhat image tag cho Frontend
                             sed -i "/frontend:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_FE}:${env.IMAGE_TAG}|" values-prod.yaml
-
                             
                             git add values-prod.yaml
                             git commit -m "Update images to ${env.IMAGE_TAG} [skip ci]" || echo "No changes"
