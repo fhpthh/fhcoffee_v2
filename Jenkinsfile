@@ -1,6 +1,7 @@
 pipeline {
     agent {
         kubernetes {
+            cloud 'cloud-typ'
             yamlFile 'kaniko-builder.yaml'
         }
     }
