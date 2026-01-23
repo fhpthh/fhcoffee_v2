@@ -53,20 +53,6 @@ pipeline {
             }
         }
 
-        stage("Build & Push Backend Image") {
-            steps {
-                container('kaniko') {
-                    echo "Building Backend... ${env.BASE_IMAGE_BE}:${env.IMAGE_TAG}"
-                    sh """
-                    /kaniko/executor \
-                        --context ${WORKSPACE}/backend \
-                        --dockerfile ${WORKSPACE}/backend/Dockerfile \
-                        --destination=${env.BASE_IMAGE_BE}:${env.IMAGE_TAG}
-                    """ 
-                }
-            }
-        }
-
         stage("Build & Push Frontend Image") {
             steps {
                 container('kaniko') {
@@ -81,19 +67,6 @@ pipeline {
              }
          }
 
-        stage("Build & Push Admin Image") {
-            steps {
-                container('kaniko') {
-                    echo "Building Admin... ${env.BASE_IMAGE_AD}:${env.IMAGE_TAG}"
-                    sh """
-                    /kaniko/executor \
-                        --context ${WORKSPACE}/admin \
-                        --dockerfile ${WORKSPACE}/admin/Dockerfile \
-                        --destination=${env.BASE_IMAGE_AD}:${env.IMAGE_TAG}
-                    """ 
-                 }
-             }
-        }
 
         stage("Update ArgoCD") {
             steps {
@@ -102,12 +75,9 @@ pipeline {
                         dir('config-deploy-repo') {
                             sh """
                             git clone https://\$GITHUB_TOKEN@${env.GIT_CONFIG_REPO} .
-                            
-                            # Cap nhat image cho tung block service dua tren file values-prod.yaml cua ban
-                            # Tim phan backend:, frontend:, admin: va thay the dong image tuong ung
-                            sed -i "/backend:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_BE}:${env.IMAGE_TAG}|" values-prod.yaml
+                    
                             sed -i "/frontend:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_FE}:${env.IMAGE_TAG}|" values-prod.yaml
-                            sed -i "/admin:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_AD}:${env.IMAGE_TAG}|" values-prod.yaml
+               
                             
                             git config user.email "jenkins-bot@ci.com"
                             git config user.name "jenkins-bot"
