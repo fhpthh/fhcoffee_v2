@@ -71,7 +71,7 @@ pipeline {
         stage("Update ArgoCD") {
             steps {
                 container('git') {
-                  withCredentials([string(credentialsId: "${env.GIT_CRED_ID}", variable: 'GITHUB_TOKEN')]) {
+                  withCredentials([usernamePassword(credentialsId: "${env.GIT_CRED_ID}", passwordVariable: 'GITHUB_TOKEN', usernameVariable: 'GITHUB_USER')]) {
                         dir('config-deploy-repo') {
                             sh """
                             git clone https://\$GITHUB_TOKEN@${env.GIT_CONFIG_REPO} .
