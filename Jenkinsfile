@@ -74,13 +74,14 @@ pipeline {
                   withCredentials([usernamePassword(credentialsId: "${env.GIT_CRED_ID}", passwordVariable: 'GITHUB_TOKEN', usernameVariable: 'GITHUB_USER')]) {
                         dir('config-deploy-repo') {
                             sh """
-                            git clone https://\$GITHUB_TOKEN@${env.GIT_CONFIG_REPO} .
-                    
-                            sed -i "/frontend:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_FE}:${env.IMAGE_TAG}|" values-prod.yaml
-               
-                            
+                            rm -rf .git
+                            git clone https://\${GIT_USER}:\${GIT_PASS}@${env.GIT_CONFIG_REPO} .
+
                             git config user.email "jenkins-bot@ci.com"
                             git config user.name "jenkins-bot"
+                            
+                            sed -i "/frontend:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_FE}:${env.IMAGE_TAG}|" values-prod.yaml
+
                             
                             git add values-prod.yaml
                             git commit -m "Update images to ${env.IMAGE_TAG} [skip ci]" || echo "No changes"
