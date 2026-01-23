@@ -73,7 +73,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: "${env.GIT_CRED_ID}", passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         dir('config-deploy-repo') {
                             sh """
-                            rm -rf * .git
+                            rm -rf ./* ./.git
                             
                             git clone https://\${GIT_USER}:\${GIT_PASS}@${env.GIT_CONFIG_REPO} .
 
