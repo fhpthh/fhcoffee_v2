@@ -25,7 +25,7 @@ spec:
     projected:
       sources:
       - secret:
-          name: my-docker
+          name: docker-credentials
           items:
             - key: .dockerconfigjson
               path: config.json
