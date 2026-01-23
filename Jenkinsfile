@@ -71,20 +71,33 @@ pipeline {
             steps {
                 container('git') {
                     withCredentials([usernamePassword(credentialsId: "${env.GIT_CRED_ID}", passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
-                        dir('config-deploy-repo') {
+                        script {
                             sh """
-                            rm -rf ./* ./.git
+                            # 1. Xoa thu muc tam neu co
+                            rm -rf update_tmp
                             
-                            git clone https://\${GIT_USER}:\${GIT_PASS}@${env.GIT_CONFIG_REPO} .
-
+                            # 2. Clone vao thu muc 'update_tmp' (Sua loi not a git directory)
+                            # Dung dau gach cheo nguoc de Jenkins hieu day la bien Shell
+                            git clone https://\${GIT_USER}:\${GIT_PASS}@${env.GIT_CONFIG_REPO} update_tmp
+                            
+                            # 3. Vao thu muc tam de thao tac
+                            cd update_tmp
+                            
+                            # 4. Thiet lap danh tinh
                             git config user.email "jenkins-bot@ci.com"
                             git config user.name "jenkins-bot"
                             
+                            # 5. Cap nhat image cho Frontend
                             sed -i "/frontend:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_FE}:${env.IMAGE_TAG}|" values-prod.yaml
                             
+                            # 6. Commit va Push
                             git add values-prod.yaml
                             git commit -m "Update image tag to ${env.IMAGE_TAG} [skip ci]" || echo "No changes"
                             git push origin ${env.CONFIG_BRANCH}
+                            
+                            # 7. Don dep
+                            cd ..
+                            rm -rf update_tmp
                             """
                         }
                     }
@@ -95,10 +108,10 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline success!"
+            echo "Pipeline hoan thanh thanh cong!"
         }
         failure {
-            echo "Pipeline failed!"
+            echo "Pipeline that bai!"
         }
         always {
             cleanWs()
