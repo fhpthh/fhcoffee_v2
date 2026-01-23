@@ -29,6 +29,7 @@ pipeline {
             steps {
                 container('git') {
                     script {
+                        sh "git config --global --add safe.directory ${WORKSPACE}"
                         sh 'git fetch --tags'
                         def tagName = sh(
                             script: "git describe --tags --exact-match || true",
