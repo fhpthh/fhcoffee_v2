@@ -95,7 +95,7 @@ pipeline {
              }
         }
 
-        stage("Update AgroCD") {
+        stage("Update ArgoCD") {
             steps {
                 container('git') {
                   withCredentials([string(credentialsId: "${env.GIT_CRED_ID}", variable: 'GITHUB_TOKEN')]) {
@@ -103,14 +103,17 @@ pipeline {
                             sh """
                             git clone https://\$GITHUB_TOKEN@${env.GIT_CONFIG_REPO} .
                             
-                            # Cap nhat tag moi cho tat ca service trong values-prod.yaml
-                            sed -i "s/tag:.*/tag: ${env.IMAGE_TAG}/g" values-prod.yaml
+                            # Cap nhat image cho tung block service dua tren file values-prod.yaml cua ban
+                            # Tim phan backend:, frontend:, admin: va thay the dong image tuong ung
+                            sed -i "/backend:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_BE}:${env.IMAGE_TAG}|" values-prod.yaml
+                            sed -i "/frontend:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_FE}:${env.IMAGE_TAG}|" values-prod.yaml
+                            sed -i "/admin:/,/port:/ s|image:.*|image: ${env.BASE_IMAGE_AD}:${env.IMAGE_TAG}|" values-prod.yaml
                             
                             git config user.email "jenkins-bot@ci.com"
                             git config user.name "jenkins-bot"
                             
                             git add values-prod.yaml
-                            git commit -m "Update image tag to ${env.IMAGE_TAG} [skip ci]" || echo "No changes"
+                            git commit -m "Update images to ${env.IMAGE_TAG} [skip ci]" || echo "No changes"
                             git push origin ${env.CONFIG_BRANCH}
                             """
                         }
@@ -125,7 +128,7 @@ pipeline {
             echo "Pipeline hoan thanh thanh cong!"
         }
         failure {
-            echo "Pipeline that bai. Kiem tra log cua cac container."
+            echo "Pipeline that bai. Kiem tra tai nguyen RAM trong kaniko-builder.yaml."
         }
         always {
             cleanWs()
